@@ -8,7 +8,15 @@
 
 1. `npm i`で必要なライブラリをインストールします
 
-2. アプリケーションを実行します
+2. 以下二つのコマンドをターミナルで実行します
+
+```bash
+     cd src/python
+     uvicorn index:app --reload
+
+```
+
+3. アプリケーションを実行します
 
 ```bash
    npm run dev
