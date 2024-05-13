@@ -32,7 +32,7 @@ export default function SideNav() {
               マイページ
             </Link>
           ) : (
-            <Login>{false}</Login>
+            <Login></Login>
           )}
         </div>
       </div>
