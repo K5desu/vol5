@@ -7,7 +7,7 @@ export default function Logout() {
   if (status === "authenticated") {
     return (
       <div>
-        <button onClick={() => signOut()}>マイアカウント</button>
+        <button onClick={() => signOut()}>ログアウト</button>
       </div>
     );
   }

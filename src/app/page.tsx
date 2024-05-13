@@ -13,7 +13,6 @@ export default function Page() {
     .then((data) => console.log(data));
   return (
     <div className="flex flex-row h-screen">
-      <SideNav />
       <div className="flex-grow bg-gray-100"></div>
     </div>
   );

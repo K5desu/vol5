@@ -16,6 +16,7 @@ const nextConfig = {
             ? "http://127.0.0.1:8000/docs"
             : "/python/docs",
       },
+
       {
         source: "/openapi.json",
         destination:
@@ -24,6 +25,9 @@ const nextConfig = {
             : "/python/openapi.json",
       },
     ];
+  },
+  images: {
+    domains: ["lh3.googleusercontent.com"],
   },
 };
 
