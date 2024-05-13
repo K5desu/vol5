@@ -1,7 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
-import Login from "@/components/Login";
-import Logout from "@/components/Logout";
+import Login from "@/components/Oauth/Login";
+import Logout from "@/components/Oauth/Logout";
 import Link from "next/link";
 import NavLinks from "@/components/sidenav/navlinks";
 export default function SideNav() {

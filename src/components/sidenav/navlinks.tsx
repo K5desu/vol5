@@ -3,8 +3,8 @@
 const links = [
   { name: "ホーム", href: "./" },
   {
-    name: "マイデータ",
-    href: "/dashboard/invoices",
+    name: "データ",
+    href: "/data",
   },
 ];
 
