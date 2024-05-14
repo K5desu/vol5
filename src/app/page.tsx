@@ -1,19 +1,42 @@
-import SideNav from "@/components/sidenav/sidenav";
+"use client";
+import { useRef } from "react";
+import Gemini from "@/app/api/gemini";
 
 export default function Page() {
-  fetch("http://localhost:3000/python")
-    .then((response) => {
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.indexOf("application/json") !== -1) {
-        return response.json();
-      } else {
-        return response.text();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleClick = async () => {
+    const inputValue = inputRef.current?.value;
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+
+    if (inputValue) {
+      console.log(inputValue);
+      const response = await Gemini(inputValue);
+      if (inputValue) {
+        console.log(inputValue);
+        const response = await Gemini(inputValue);
+        if (
+          response &&
+          response.candidates &&
+          response.candidates[0] &&
+          response.candidates[0].content &&
+          response.candidates[0].content.parts &&
+          response.candidates[0].content.parts[0]
+        ) {
+          console.log(response.candidates[0].content.parts[0].text);
+        } else {
+          console.log("Response is not in the expected format");
+        }
       }
-    })
-    .then((data) => console.log(data));
+    }
+  };
+
   return (
-    <div className="flex flex-row h-screen">
-      <div className="flex-grow bg-gray-100"></div>
+    <div>
+      <input ref={inputRef} type="text " className="border-2 border-black" />
+      <button onClick={handleClick}>Send</button>
     </div>
   );
 }
