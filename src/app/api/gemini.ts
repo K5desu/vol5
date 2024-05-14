@@ -9,7 +9,7 @@ const Gemini = async (inputText: string) => {
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
   const result = await model.generateContent(
-    `次の内容を褒めてください。「${inputText}」`
+    `次のストレス内容をコーピングと認知行動療法セッションの観点からアドバイスしてください「${inputText}」`
   );
   const response = await result.response;
   return response;
