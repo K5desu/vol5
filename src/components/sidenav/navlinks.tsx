@@ -7,8 +7,8 @@ import Link from "next/link";
 const links = [
   { name: "ホーム", href: "/" },
   {
-    name: "データ",
-    href: "/data",
+    name: "記事",
+    href: "/articles",
   },
 ];
 

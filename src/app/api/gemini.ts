@@ -9,11 +9,10 @@ const Gemini = async (inputText: string) => {
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
   const result = await model.generateContent(
-    `次のストレス内容をコーピングと認知行動療法セッションの観点からアドバイスしてください「${inputText}」`
+    `次のストレス内容をコーピングと認知行動療法セッションの観点からアドバイスしてください。しかし:この記号は使わないでください「${inputText}」`
   );
   const response = await result.response;
   return response;
-
   // ここでresponseを使用する
 };
 
