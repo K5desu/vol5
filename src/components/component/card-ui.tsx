@@ -26,7 +26,7 @@ import {
 import incrementLikeCount from "@/app/api/article/incrementLikeCount";
 import { Button } from "@/components/ui/button";
 type CardUIProps = {
-  Id: number;
+  Id: string;
   title: string;
   description: string;
   like_count: number;
@@ -39,7 +39,7 @@ export default function CardUI({
   like_count,
 }: CardUIProps) {
   const [likeCount, setLikeCount] = useState(like_count);
-  const incrementLikeCounthandle = async (Id: number) => {
+  const incrementLikeCounthandle = async (Id: string) => {
     try {
       await incrementLikeCount(Id);
       setLikeCount(likeCount + 1);

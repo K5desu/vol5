@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 
-async function checkArticleId(articleId: number): Promise<boolean> {
+async function checkArticleId(articleId: string): Promise<boolean> {
   try {
     const article = await prisma.article.findUnique({
       where: {

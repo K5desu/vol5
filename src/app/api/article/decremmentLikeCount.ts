@@ -1,7 +1,7 @@
 "use server ";
 import prisma from "@/lib/prisma";
 
-export default async function decrementLikeCount(articleId: number) {
+export default async function decrementLikeCount(articleId: string) {
   try {
     await prisma.article.update({
       where: {
