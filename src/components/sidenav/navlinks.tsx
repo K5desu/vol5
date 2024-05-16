@@ -8,7 +8,7 @@ const links = [
   { name: "ホーム", href: "/" },
   {
     name: "記事",
-    href: "/articles",
+    href: "/AI/articles",
   },
 ];
 

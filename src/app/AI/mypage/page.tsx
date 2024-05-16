@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import ButtonLoading from "@/components/buttonLoding";
-import createUser from "../api/user/createUser";
+import createUser from "@/app/api/user/createUser";
 import { ArticleType } from "@/lib/artiletype";
 import { Button } from "@/components/ui/button";
 import deleteArticleById from "@/app/api/article/deleteArticleById";
