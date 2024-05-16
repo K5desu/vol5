@@ -2,6 +2,6 @@
 
 import { redirect } from "next/navigation";
 
-export async function navigate(url: string) {
-  redirect(`./articles/${url}`);
+export async function navigate(url: string, where: string) {
+  redirect(`./articles/${url}/${where}`);
 }

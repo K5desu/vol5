@@ -7,11 +7,20 @@ import Image from "next/image";
 import ButtonLoading from "@/components/buttonLoding";
 import createUser from "../api/user/createUser";
 import { ArticleType } from "@/lib/artiletype";
+import { Button } from "@/components/ui/button";
+import deleteArticleById from "@/app/api/article/deleteArticleById";
+import { navigate } from "@/lib/redirect";
+import cuid from "cuid";
 export default function Page() {
   const [articles, setArticles] = useState<ArticleType[] | null>(null);
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
 
+  const editArticle = (url: string) => {
+    console.log("click");
+
+    navigate(url, "edit");
+  };
   useEffect(() => {
     if (status === "authenticated" && session?.user?.email) {
       (async () => {
@@ -56,6 +65,12 @@ export default function Page() {
               <li key={index}>
                 <h3>{article.title}</h3>
                 <p>{article.content}</p>
+                <Button onClick={() => editArticle(article.id)}>編集</Button>
+                <Button
+                  onClick={async () => await deleteArticleById(article.id)}
+                >
+                  削除
+                </Button>
               </li>
             ))}
           </ul>

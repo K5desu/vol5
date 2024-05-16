@@ -13,7 +13,7 @@ export default function Page() {
   const createArticle = () => {
     console.log("click");
     const uniqueId = cuid();
-    navigate(uniqueId);
+    navigate(uniqueId, "post");
   };
   useEffect(() => {
     (async () => {
