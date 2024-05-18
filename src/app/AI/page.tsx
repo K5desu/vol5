@@ -41,122 +41,62 @@ export default function Page() {
     }
 
     if (inputValue) {
-      if (possibility == "はい") {
+      const response = await gemininot(
+        age,
+        gender,
+        duration,
+        category,
+        inputValue
+      );
+      if (response.candidates && response.candidates[0].content.parts[0]) {
+        setGeminiResponse(response.candidates[0].content.parts[0].text || "");
+        let geminiResponse = response.candidates[0].content.parts[0].text || "";
+
+        const sections = geminiResponse
+          .split(/title(.*?)title/)
+          .filter((_, i) => i % 2 !== 0);
+        const descriptions = geminiResponse
+          .split(/title(.*?)title/)
+          .filter((_, i) => i % 2 === 0)
+          .slice(1);
+        setCards(
+          sections.map((section, i) => ({
+            title: section.trim(),
+            description: descriptions[i].trim(),
+          }))
+        );
         const title = await geminiapititle(inputValue);
-        const response = await Gemini(
-          age,
-          gender,
-          duration,
-          category,
-          inputValue
-        );
-        if (
-          response &&
-          response.candidates &&
-          response.candidates[0].content.parts[0]
-        ) {
-          setGeminiResponse(response.candidates[0].content.parts[0].text || "");
-
-          let geminiResponse =
-            response.candidates[0].content.parts[0].text || "";
-
-          const sections = geminiResponse
-            .split(/title(.*?)title/)
-            .filter((_, i) => i % 2 !== 0);
-          const descriptions = geminiResponse
-            .split(/title(.*?)title/)
-            .filter((_, i) => i % 2 === 0)
-            .slice(1);
-          setCards(
-            sections.map((section, i) => ({
-              title: section.trim(),
-              description: descriptions[i].trim(),
-            }))
-          );
-          if (title.candidates && title?.candidates[0]?.content.parts[0]) {
-            geminititle = title.candidates[0].content.parts[0].text || "";
-          }
-          if (session?.user?.email) {
-            age = age.replace("代", "");
-            let ageNum = Number(age);
-            // 20
-            const id = cuid();
-            createArticleByEmail(
-              id,
-              session?.user?.email,
-              geminititle,
-              geminiResponse,
-              gender,
-              ageNum,
-              duration,
-              category,
-              possibility
-            );
-            toast({
-              title: "記事作成完了",
-              description: "マイページに記事が保存されました。",
-            });
-          }
-        } else {
-          console.log("Response is not in the expected format");
-        }
-      } else {
-        const response = await gemininot(
-          age,
-          gender,
-          duration,
-          category,
-          inputValue
-        );
-        if (response.candidates && response.candidates[0].content.parts[0]) {
-          setGeminiResponse(response.candidates[0].content.parts[0].text || "");
-          let geminiResponse =
-            response.candidates[0].content.parts[0].text || "";
-
-          const sections = geminiResponse
-            .split(/title(.*?)title/)
-            .filter((_, i) => i % 2 !== 0);
-          const descriptions = geminiResponse
-            .split(/title(.*?)title/)
-            .filter((_, i) => i % 2 === 0)
-            .slice(1);
-          setCards(
-            sections.map((section, i) => ({
-              title: section.trim(),
-              description: descriptions[i].trim(),
-            }))
-          );
-          const title = await geminiapititle(inputValue);
+        if (possibility == "いいえ") {
           setNotpossibility(
             "あなたに最も必要なコーピングは、身近な人々や信頼できる他者への相談、近い状況にある人の経験談などを取り入れる情動焦点型コーピングです。以下の記事に近いカテゴリの方々の記事を載せていますのでぜひご覧ください。"
           );
-          if (title.candidates && title?.candidates[0]?.content.parts[0]) {
-            geminititle = title.candidates[0].content.parts[0].text || "";
-          }
-          if (session?.user?.email) {
-            age = age.replace("代", "");
-            let ageNum = Number(age);
-            // 20
-            const id = cuid();
-            createArticleByEmail(
-              id,
-              session?.user?.email,
-              geminititle,
-              geminiResponse,
-              gender,
-              ageNum,
-              duration,
-              category,
-              possibility
-            );
-            toast({
-              title: "記事作成完了",
-              description: "マイページに記事が保存されました。",
-            });
-          }
-        } else {
-          console.log("Response is not in the expected format");
         }
+        if (title.candidates && title?.candidates[0]?.content.parts[0]) {
+          geminititle = title.candidates[0].content.parts[0].text || "";
+        }
+        if (session?.user?.email) {
+          age = age.replace("代", "");
+          let ageNum = Number(age);
+          // 20
+          const id = cuid();
+          createArticleByEmail(
+            id,
+            session?.user?.email,
+            geminititle,
+            geminiResponse,
+            gender,
+            ageNum,
+            duration,
+            category,
+            possibility
+          );
+          toast({
+            title: "記事作成完了",
+            description: "マイページに記事が保存されました。",
+          });
+        }
+      } else {
+        console.log("Response is not in the expected format");
       }
     }
   };
