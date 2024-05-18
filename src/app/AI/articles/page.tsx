@@ -16,9 +16,9 @@ export default function Page() {
   }, []);
   return (
     <>
-      <div className="flex  justify-between w-[100vw] ">
+      <div className="block m-3 justify-between w-[100vw] ">
         {articles.map((item, index) => (
-          <div key={index} className="mx-auto">
+          <div key={index} className="mx-auto my-3">
             {item.aftercare &&
               cardui(
                 item.id,
