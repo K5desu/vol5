@@ -6,6 +6,7 @@ export const Testtypes = [
       color: '#F4A261',
       combination: { possibility: 'はい', category: '自己要因' },
       animationData: '/Lottie/stressed-man.json',
+      
     },
     {
       title: 'パーフェクトヒューマン型',
