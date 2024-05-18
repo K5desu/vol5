@@ -11,10 +11,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Reactmarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import gemininot from "@/app/api/gemininot";
 import { Testtypes } from "@/data/TestTypes";
 import PersonalityCard from "@/components/component/TypeCard";
+import ButtonLoading from "@/components/buttonLoding";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -36,9 +37,9 @@ export default function Page() {
   let duration: string = "";
   let possibility: string = "";
   let category: string = "";
-
-
+  const [respone, setRespone] = useState(false);
   const handleClick = async () => {
+    setRespone(true);
     const inputValue = inputRef.current?.value;
     if (inputRef.current) {
       inputRef.current.value = "";
@@ -104,6 +105,7 @@ export default function Page() {
             title: "記事作成完了",
             description: "マイページに記事が保存されました。",
           });
+          setRespone(false);
         }
 
         // Find the matching personality type
@@ -113,7 +115,6 @@ export default function Page() {
             type.combination.category === category
         );
         setPersonalityType(matchedType);
-
       } else {
       }
     }
@@ -167,47 +168,41 @@ export default function Page() {
 
   return (
     <div>
-      {personalityType && (
-        <PersonalityCard
-          title={personalityType.title}
-          description={personalityType.description}
-          color={personalityType.color}
-          tag={`${possibility} ${category}`}
-          animationData={personalityType.animationData}
-        />
-      )}{" "}
-      {geminiResponse ? (
+      {geminiResponse || respone ? (
         <div>
+          {respone ? (
+            <div className="flex justify-center items-center h-[100vh]">
+              <ButtonLoading />
+            </div>
+          ) : (
+            <div>
+              {personalityType && (
+                <PersonalityCard
+                  title={personalityType.title}
+                  description={personalityType.description}
+                  color={personalityType.color}
+                  tag={`${possibility} ${category}`}
+                  animationData={personalityType.animationData}
+                />
+              )}
 
-          {personalityType && (
-              <PersonalityCard
-                title={personalityType.title}
-                description={personalityType.description}
-                color={personalityType.color}
-                tag={`${possibility} ${category}`}
-                animationData={personalityType.animationData}
-              />
-            )}
-          
-          {
-        cards.map((card, index) => (
-
-          <div key={index}>
-            <Card>
-              <CardHeader>
-                <CardTitle>{card.title}</CardTitle>
-                <CardDescription>
-                  <Reactmarkdown>{card.description}</Reactmarkdown>
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            
-          </div>
-        ))}
-
+              {cards.map((card, index) => (
+                <div key={index}>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>{card.title}</CardTitle>
+                      <CardDescription>
+                        <ReactMarkdown>{card.description}</ReactMarkdown>
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ) : (
-        <div className="flex justify-center items-center  ">
+        <div className="flex justify-center items-center">
           <main className="w-full  p-8 bg-white mt-10">
             <h1 className="text-3xl font-bold text-center mb-12 text-black-700">
               ストレス対処アンケート
@@ -264,25 +259,24 @@ export default function Page() {
             <div className="mb-12">
               <p className="mb-4 font-semibold">詳細</p>
               <textarea
-                                className="w-full h-36 p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
-                                placeholder="ストレスの詳細を記述"
-                                ref={inputRef}
-                              ></textarea>
-                            </div>
-                            <div className="text-center">
-                              <button
-                                type="submit"
-                                className="px-8 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-500 focus:outline-none"
-                                onClick={async () => handleClick()}
-                              >
-                                送信
-                              </button>
-                            </div>
-                          </main>
-                        </div>
-                      )}
-                      {notpossibility}
-                    </div>
-                  );
-                }
-                
+                className="w-full h-36 p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
+                placeholder="ストレスの詳細を記述"
+                ref={inputRef}
+              ></textarea>
+            </div>
+            <div className="text-center">
+              <button
+                type="submit"
+                className="px-8 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-500 focus:outline-none"
+                onClick={async () => handleClick()}
+              >
+                送信
+              </button>
+            </div>
+          </main>
+        </div>
+      )}
+      {notpossibility}
+    </div>
+  );
+}
