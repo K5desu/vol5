@@ -26,7 +26,7 @@ export default function Page() {
           >
             {item.id}
             {item.title}
-            {item.user_name}
+            {item.user_id}
             {item.like_count}
           </div>
         ))}

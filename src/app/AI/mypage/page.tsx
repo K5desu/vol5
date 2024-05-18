@@ -57,6 +57,8 @@ export default function Page() {
           <input type="text" ref={inputRef} />
           <Button
             onClick={() => {
+              if (inputRef.current && userRef.current)
+                userRef.current.username = inputRef.current.value;
               if (inputRef.current && session?.user?.email) {
                 updateUsernameByEmail(
                   session?.user?.email,
