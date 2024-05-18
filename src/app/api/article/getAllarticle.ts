@@ -7,6 +7,14 @@ const getAllarticle = async () => {
       where: {
         open: true,
       },
+      include: {
+        user: {
+          select: {
+            username: true, // usernameフィールドを含める
+            blob_id: true, // imgフィールドを含める
+          },
+        },
+      },
     });
     return articles;
   } catch (error) {

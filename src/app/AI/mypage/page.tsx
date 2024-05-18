@@ -13,7 +13,24 @@ import { navigate } from "@/lib/redirect";
 import updateUsernameByEmail from "@/app/api/user/changeUsernameByEmail";
 import getUserByEmail from "@/app/api/user/getUserByEmail";
 export default function Page() {
-  const [articles, setArticles] = useState<ArticleType[] | null>(null);
+  type ArticleType1 = {
+    id: string;
+    user_id: number;
+    title: string;
+    content: string;
+    aftercare: string | null;
+    like_count: number;
+    gender_tag: string;
+    age_tag: number;
+    duration_tag: string;
+    possibility_tag: string;
+    category_tag: string;
+    open: boolean;
+    created_at: Date;
+    updated_at: Date;
+    // userフィールドを追加
+  };
+  const [articles, setArticles] = useState<ArticleType1[] | null>(null);
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
   const [update, setUpdate] = useState(false);
