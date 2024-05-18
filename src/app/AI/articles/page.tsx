@@ -9,10 +9,7 @@ import { navigate } from "@/lib/redirect";
 
 export default function Page() {
   const [articles, setArticles] = useState<ArticleType[]>([]);
-  const createArticle = () => {
-    const uniqueId = cuid();
-    navigate(uniqueId, "post", undefined);
-  };
+
   useEffect(() => {
     (async () => {
       const articles = await getAllartile();
@@ -29,11 +26,10 @@ export default function Page() {
           >
             {item.id}
             {item.title}
-            {item.content}
+            {item.user_name}
             {item.like_count}
           </div>
         ))}
-        <Button onClick={createArticle}>投稿</Button>
       </div>
     </>
   );

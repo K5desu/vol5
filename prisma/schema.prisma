@@ -19,17 +19,24 @@ model User {
   id       Int      @id @default(autoincrement())
   username String
   email    String   @unique
-  blob_id  String  
+  blob_id  String?
   posts    Article[]
 }
 
 model Article {
-  id         String      @id @default(uuid())
-  user_id    Int
-  title      String
-  content    String
-  like_count Int
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  user       User     @relation(fields: [user_id], references: [id])
+  id               String    @id @default(uuid())
+  user_id          Int
+  title            String
+  content          String
+  aftercare        String?
+  like_count       Int
+  gender_tag       String
+  age_tag          Int
+  duration_tag     String
+  possibility_tag  String
+  category_tag     String
+  open             Boolean
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+  user             User     @relation(fields: [user_id], references: [id])
 }

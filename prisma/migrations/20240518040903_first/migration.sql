@@ -3,7 +3,7 @@ CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "blob_id" TEXT NOT NULL,
+    "blob_id" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -14,7 +14,14 @@ CREATE TABLE "Article" (
     "user_id" INTEGER NOT NULL,
     "title" TEXT NOT NULL,
     "content" TEXT NOT NULL,
+    "aftercare" TEXT,
     "like_count" INTEGER NOT NULL,
+    "gender_tag" TEXT NOT NULL,
+    "age_tag" INTEGER NOT NULL,
+    "duration_tag" TEXT NOT NULL,
+    "possibility_tag" TEXT NOT NULL,
+    "category_tag" TEXT NOT NULL,
+    "open" BOOLEAN NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 

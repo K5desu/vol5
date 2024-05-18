@@ -3,7 +3,10 @@ import { useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import Gemini from "@/app/api/gemini";
 import { useState } from "react";
+import createArticleByEmail from "../api/article/createArticleByEmail";
 import geminiapititle from "@/app/api/geminititle";
+import cuid from "cuid";
+import { useSession } from "next-auth/react";
 import {
   Card,
   CardDescription,
@@ -13,6 +16,7 @@ import {
 import Reactmarkdown from "react-markdown";
 import gemininot from "@/app/api/gemininot";
 export default function Page() {
+  const { data: session, status } = useSession();
   const { toast } = useToast();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [notpossibility, setNotpossibility] = useState("");
@@ -67,10 +71,14 @@ export default function Page() {
           if (title.candidates && title?.candidates[0]?.content.parts[0]) {
             setTitle(title.candidates[0].content.parts[0].text || "");
           }
-          toast({
-            title: "記事作成完了",
-            description: "マイページに記事が保存されました",
-          });
+          if (session?.user?.email) {
+            const id = cuid();
+
+            toast({
+              title: "記事作成完了",
+              description: "マイページに記事が保存されました",
+            });
+          }
         } else {
           console.log("Response is not in the expected format");
         }
