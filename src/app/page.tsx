@@ -74,7 +74,7 @@ const Introduction = () => {
 
   return (
     <div className="bg-gray-200 min-h-screen">
-      <Header title="Stress Nav" />
+      <Header title="AI Love Stress" />
       <Navbar onScrollToPersonalityCards={handleScrollToPersonalityCards} />
       <div className="p-4 flex flex-col items-center justify-center">
         <div className="w-2/3 text-center">
