@@ -16,23 +16,21 @@ export default function Page() {
   }, []);
   return (
     <>
-      <div className="flex  justify-between w-[100vw] ">
-        {articles.map((item, index) => (
-          <div key={index} className="mx-auto">
-            {item.aftercare &&
-              cardui(
-                item.id,
-                item.title,
-                item.age_tag,
-                item.gender_tag,
-                item.user.username,
-                item.like_count,
-                item.user.blob_id,
-                false
-              )}
-          </div>
-        ))}
-      </div>
+      {articles.map((item, index) => (
+        <div key={index}>
+          {item.aftercare &&
+            cardui(
+              item.id,
+              item.title,
+              item.age_tag,
+              item.gender_tag,
+              item.user.username,
+              item.like_count,
+              item.user.blob_id,
+              false
+            )}
+        </div>
+      ))}
     </>
   );
 }

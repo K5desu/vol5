@@ -14,7 +14,7 @@ export default function CardUI(
   session: boolean
 ) {
   return (
-    <div className="max-w-lg mx-auto bg-white shadow-md rounded-lg p-4 my-5">
+    <div className="w-[500px] mx-auto bg-white shadow-md rounded-lg p-4 my-5">
       <div className="text-gray-900 font-bold mb-2">{title}</div>
       <div className="flex justify-end">
         <Link href={`/AI/articles/${id}`}>
@@ -36,11 +36,18 @@ export default function CardUI(
           </svg>
         </Link>
       </div>
-      <div className="flex space-x-1 mb-2">
-        <span className="bg-gray-200 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-          <img src={blob_id} alt="userimg" className="w-12 h-12 rounded-full" />
+      <div className="flex space-between mb-2">
+        <span className=" text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+          {blob_id && (
+            <img
+              src={blob_id}
+              alt="userimg"
+              className="w-[48px] h-[48px] rounded-full"
+            />
+          )}
+          {username}
         </span>
-        {username}
+
         <span className="bg-gray-200 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded">
           {age_tag}
         </span>
