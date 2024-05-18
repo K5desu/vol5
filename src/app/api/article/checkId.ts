@@ -14,5 +14,4 @@ async function checkArticleId(articleId: string): Promise<boolean> {
     return false;
   }
 }
-
 export default checkArticleId;

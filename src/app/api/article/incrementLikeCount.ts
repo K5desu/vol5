@@ -13,7 +13,5 @@ export default async function incrementLikeCount(articleId: string) {
         },
       },
     });
-  } catch (error) {
-    console.error("Error incrementing like count:", error);
-  }
+  } catch (error) {}
 }

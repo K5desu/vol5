@@ -1,5 +1,6 @@
 "use server";
 import prisma from "@/lib/prisma";
+import { error } from "console";
 
 export default async function getArticleById(articleId: string) {
   try {
@@ -10,7 +11,7 @@ export default async function getArticleById(articleId: string) {
     });
 
     if (!article) {
-      throw new Error(`Article with ID ${articleId} not found`);
+      throw error("Article not found");
     }
 
     return article;
