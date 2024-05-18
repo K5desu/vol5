@@ -1,18 +1,25 @@
 import React from 'react'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../shadcn/ui/card_f_intro'
 
-const ICard = () => {
+interface ICardProps {
+    title: string;
+    description: string;
+    content: string;
+    footer: string;
+  }
+
+  const ICard: React.FC<ICardProps> = ({ title, description, content, footer }) => {
   return (
-    <Card>
+    <Card className='bg-white'>
   <CardHeader>
-    <CardTitle>Card Title</CardTitle>
-    <CardDescription>Card Description</CardDescription>
+    <CardTitle>{title}</CardTitle>
+    <CardDescription>{description}</CardDescription>
   </CardHeader>
   <CardContent>
-    <p>Card Content</p>
+    <p>{content}</p>
   </CardContent>
   <CardFooter>
-    <p>Card Footer</p>
+    <p>{footer}</p>
   </CardFooter>
 </Card>
 
