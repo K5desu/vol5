@@ -6,7 +6,6 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import ButtonLoading from "@/components/buttonLoding";
 import createUser from "@/app/api/user/createUser";
-import { ArticleType } from "@/lib/artiletype";
 import { Button } from "@/components/ui/button";
 import deleteArticleById from "@/app/api/article/deleteArticleById";
 import { navigate } from "@/lib/redirect";
