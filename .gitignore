@@ -35,4 +35,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-
+# Ignore Python cache files
+__pycache__/
+*.pyc
