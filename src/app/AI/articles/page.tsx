@@ -25,21 +25,13 @@ export default function Page() {
             {item.aftercare &&
               cardui(
                 item.id,
-                item.user_id,
                 item.title,
-                item.content,
-                item.aftercare,
-                item.like_count,
-                item.gender_tag,
                 item.age_tag,
-                item.duration_tag,
-                item.possibility_tag,
-                item.category_tag,
-
-                item.created_at,
-                item.updated_at,
+                item.gender_tag,
                 item.user.username,
-                item.user.blob_id
+                item.like_count,
+                item.user.blob_id,
+                false
               )}
           </div>
         ))}

@@ -6,12 +6,12 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import ButtonLoading from "@/components/buttonLoding";
 import createUser from "@/app/api/user/createUser";
-import { ArticleType } from "@/lib/artiletype";
 import { Button } from "@/components/ui/button";
 import deleteArticleById from "@/app/api/article/deleteArticleById";
 import { navigate } from "@/lib/redirect";
 import updateUsernameByEmail from "@/app/api/user/changeUsernameByEmail";
 import getUserByEmail from "@/app/api/user/getUserByEmail";
+import CardUi from "@/components/component/card-ui";
 export default function Page() {
   type ArticleType1 = {
     id: string;
@@ -41,11 +41,6 @@ export default function Page() {
     email: string;
     blob_id: string | null;
   } | null>(null);
-  const editArticle = (url: string) => {
-    console.log("click");
-
-    navigate(url, "edit", undefined);
-  };
 
   useEffect(() => {
     if (status === "authenticated" && session?.user?.email) {
@@ -69,6 +64,7 @@ export default function Page() {
 
   return (
     <div className="block">
+      <Logout></Logout>
       {update ? (
         <div>
           <input type="text" ref={inputRef} />
@@ -112,14 +108,16 @@ export default function Page() {
           <ul>
             {articles.map((article, index) => (
               <li key={index}>
-                <h3>{article.title}</h3>
-                <p>{article.content}</p>
-                <Button onClick={() => editArticle(article.id)}>編集</Button>
-                <Button
-                  onClick={async () => await deleteArticleById(article.id)}
-                >
-                  削除
-                </Button>
+                {CardUi(
+                  article.id,
+                  article.title,
+                  article.age_tag,
+                  article.gender_tag,
+                  "自分",
+                  article.like_count,
+                  null,
+                  true
+                )}
               </li>
             ))}
           </ul>
@@ -129,8 +127,6 @@ export default function Page() {
           <ButtonLoading />
         )}
       </h2>
-
-      <Logout></Logout>
     </div>
   );
 }
