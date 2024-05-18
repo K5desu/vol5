@@ -36,7 +36,7 @@ export default function Page() {
   let duration: string = "";
   let possibility: string = "";
   let category: string = "";
-  let id = cuid();
+
 
   const handleClick = async () => {
     const inputValue = inputRef.current?.value;
@@ -89,7 +89,7 @@ export default function Page() {
           age = age.replace("代", "");
           let ageNum = Number(age);
           const id = cuid();
-          createArticleByEmail(
+          await createArticleByEmail(
             id,
             session?.user?.email,
             geminititle,
@@ -113,9 +113,8 @@ export default function Page() {
             type.combination.category === category
         );
         setPersonalityType(matchedType);
-        console.log("sucess")
+
       } else {
-        console.log("Response is not in the expected format");
       }
     }
   };
@@ -168,8 +167,18 @@ export default function Page() {
 
   return (
     <div>
+      {personalityType && (
+        <PersonalityCard
+          title={personalityType.title}
+          description={personalityType.description}
+          color={personalityType.color}
+          tag={`${possibility} ${category}`}
+          animationData={personalityType.animationData}
+        />
+      )}{" "}
       {geminiResponse ? (
         <div>
+
           {personalityType && (
               <PersonalityCard
                 title={personalityType.title}
@@ -195,11 +204,12 @@ export default function Page() {
             
           </div>
         ))}
+
         </div>
       ) : (
-        <div className="flex justify-center items-center  bg-gray-200">
-          <main className="w-full  p-8 bg-white shadow-lg rounded-xl">
-            <h1 className="text-3xl font-bold text-center mb-12 text-blue-700">
+        <div className="flex justify-center items-center  ">
+          <main className="w-full  p-8 bg-white mt-10">
+            <h1 className="text-3xl font-bold text-center mb-12 text-black-700">
               ストレス対処アンケート
             </h1>
 

@@ -16,6 +16,7 @@ export default function Page() {
   }, []);
   return (
     <>
+
       <div className="block m-3 justify-between w-[100vw] ">
         {articles.map((item, index) => (
           <div key={index} className="mx-auto my-3">
@@ -33,6 +34,7 @@ export default function Page() {
           </div>
         ))}
       </div>
+
     </>
   );
 }
