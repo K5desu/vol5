@@ -15,7 +15,7 @@ export default function SideNav() {
         href="/"
       >
         <div className="flex items-center h-full w-32 text-white md:w-40">
-          ストレス解消アプリ
+        <img src="/ThemeIcon.png" alt="ストレス解消アプリ" className="w-full h-full object-cover transform scale-110" />
         </div>
       </Link>
       <div className="flex grow flex-row space-x-2 md:flex-col md:space-x-0 md:space-y-2">
