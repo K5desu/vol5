@@ -72,13 +72,12 @@ export default function Page() {
           setNotpossibility(
             "あなたに最も必要なコーピングは、身近な人々や信頼できる他者への相談、近い状況にある人の経験談などを取り入れる情動焦点型コーピングです。以下の記事に近いカテゴリの方々の記事を載せていますのでぜひご覧ください。"
           );
-   
+        }
         if (
           title.candidates &&
           title.candidates[0] &&
           title?.candidates[0]?.content.parts[0]
         ) {
-
           geminititle = title.candidates[0].content.parts[0].text || "";
         }
         if (session?.user?.email) {
