@@ -6,6 +6,7 @@ import Link from "next/link";
 
 const links = [
   { name: "ホーム", href: "/" },
+  { name: "AIsearch", href: "/AI" },
   {
     name: "記事",
     href: "/AI/articles",

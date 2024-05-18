@@ -1,7 +1,6 @@
 "use client";
 import { useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import Gemini from "@/app/api/gemini";
 import { useState } from "react";
 import createArticleByEmail from "../api/article/createArticleByEmail";
 import geminiapititle from "@/app/api/geminititle";
@@ -48,8 +47,11 @@ export default function Page() {
         category,
         inputValue
       );
+
       if (response.candidates && response.candidates[0].content.parts[0]) {
         setGeminiResponse(response.candidates[0].content.parts[0].text || "");
+        const title = await geminiapititle(inputValue);
+
         let geminiResponse = response.candidates[0].content.parts[0].text || "";
 
         const sections = geminiResponse
@@ -65,13 +67,18 @@ export default function Page() {
             description: descriptions[i].trim(),
           }))
         );
-        const title = await geminiapititle(inputValue);
+
         if (possibility == "いいえ") {
           setNotpossibility(
             "あなたに最も必要なコーピングは、身近な人々や信頼できる他者への相談、近い状況にある人の経験談などを取り入れる情動焦点型コーピングです。以下の記事に近いカテゴリの方々の記事を載せていますのでぜひご覧ください。"
           );
-        }
-        if (title.candidates&&title.candidates[0] && title?.candidates[0]?.content.parts[0]) {
+   
+        if (
+          title.candidates &&
+          title.candidates[0] &&
+          title?.candidates[0]?.content.parts[0]
+        ) {
+
           geminititle = title.candidates[0].content.parts[0].text || "";
         }
         if (session?.user?.email) {
