@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   Card,
@@ -8,12 +9,15 @@ import {
   CardTitle,
 } from "../shadcn/ui/card_f_intro";
 
+
+
 interface ICardProps {
   title: string;
   description: string;
   content: string;
   footer: string;
 }
+
 const ICard: React.FC<ICardProps> = ({
   title,
   description,
@@ -22,11 +26,14 @@ const ICard: React.FC<ICardProps> = ({
 }) => {
   return (
     <Card className="bg-white">
+
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
+
       <CardContent>
+
         <p>{content}</p>
       </CardContent>
       <CardFooter>
