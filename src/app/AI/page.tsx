@@ -1,11 +1,10 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { useState } from "react";
+import { useSession } from "next-auth/react";
 import createArticleByEmail from "../api/article/createArticleByEmail";
 import geminiapititle from "@/app/api/geminititle";
 import cuid from "cuid";
-import { useSession } from "next-auth/react";
 import {
   Card,
   CardDescription,
@@ -14,24 +13,29 @@ import {
 } from "@/components/ui/card";
 import Reactmarkdown from "react-markdown";
 import gemininot from "@/app/api/gemininot";
+import { Testtypes } from "@/data/TestTypes";
+import PersonalityCard from "@/components/component/TypeCard";
+
 export default function Page() {
   const { data: session, status } = useSession();
   const { toast } = useToast();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [notpossibility, setNotpossibility] = useState("");
   const [geminiResponse, setGeminiResponse] = useState("");
-  let geminititle: string = "";
-  let gender: string = "";
-  let age: string = "";
-  let duration: string = "";
-  let possibility: string = "";
-  let category: string = "";
   const [cards, setCards] = useState<{ title: string; description: string }[]>([
     {
       title: "",
       description: "",
     },
   ]);
+  const [personalityType, setPersonalityType] = useState<any>(null);
+
+  let geminititle: string = "";
+  let gender: string = "";
+  let age: string = "";
+  let duration: string = "";
+  let possibility: string = "";
+  let category: string = "";
 
   const handleClick = async () => {
     const inputValue = inputRef.current?.value;
@@ -83,9 +87,8 @@ export default function Page() {
         if (session?.user?.email) {
           age = age.replace("代", "");
           let ageNum = Number(age);
-          // 20
           const id = cuid();
-          createArticleByEmail(
+          await createArticleByEmail(
             id,
             session?.user?.email,
             geminititle,
@@ -101,8 +104,15 @@ export default function Page() {
             description: "マイページに記事が保存されました。",
           });
         }
+
+        // Find the matching personality type
+        const matchedType = Testtypes.find(
+          (type) =>
+            type.combination.possibility === possibility &&
+            type.combination.category === category
+        );
+        setPersonalityType(matchedType);
       } else {
-        console.log("Response is not in the expected format");
       }
     }
   };
@@ -155,12 +165,20 @@ export default function Page() {
 
   return (
     <div>
+      {personalityType && (
+        <PersonalityCard
+          title={personalityType.title}
+          description={personalityType.description}
+          color={personalityType.color}
+          tag={`${possibility} ${category}`}
+          animationData={personalityType.animationData}
+        />
+      )}{" "}
       {geminiResponse ? (
         <div>
-          aaa
-          {cards.map((card, index) => {
-            return (
-              <Card key={index}>
+          {cards.map((card, index) => (
+            <div key={index}>
+              <Card>
                 <CardHeader>
                   <CardTitle>{card.title}</CardTitle>
                   <CardDescription>
@@ -168,13 +186,13 @@ export default function Page() {
                   </CardDescription>
                 </CardHeader>
               </Card>
-            );
-          })}
+            </div>
+          ))}
         </div>
       ) : (
-        <div className="flex justify-center items-center  bg-gray-200">
-          <main className="w-full  p-8 bg-white shadow-lg rounded-xl">
-            <h1 className="text-3xl font-bold text-center mb-12 text-blue-700">
+        <div className="flex justify-center items-center  ">
+          <main className="w-full  p-8 bg-white mt-10">
+            <h1 className="text-3xl font-bold text-center mb-12 text-black-700">
               ストレス対処アンケート
             </h1>
 
