@@ -3,7 +3,7 @@ import React from "react";
 import getArticleById from "@/app/api/article/getArticleById";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-
+import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
@@ -42,44 +42,40 @@ const MainContent = () => {
   }, [params.articleid]);
   return (
     <div className="flex-1 p-6 ">
-      <div className="card mb-4">
-        <div className="card-body">
-          <h5 className="card-title">{article?.title}</h5>
-          <p className="card-text">{article?.content}</p>
-          <p className="card-text">{article?.aftercare}</p>
-          <button className="btn btn-light">
-            <FontAwesomeIcon icon={faThumbsUp} /> {article?.like_count}
-          </button>
-          <p className="card-text">
-            <small className="text-muted"></small>
-          </p>
-        </div>
-      </div>
-
       <div className="bg-white p-6 rounded shadow-md w-[1000px] mx-auto">
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1">ストレスの原因</label>
-          {article?.title}
+          <label className="block text-gray-700 mb-1">
+            <h1 className="text-2xl font-bold">ストレスの原因</h1>
+          </label>
+          <ReactMarkdown>{article?.title}</ReactMarkdown>
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1">AIによる提案</label>
-          {article?.content}
+          <label className="block text-gray-700 mb-1">
+            <h1 className="text-2xl font-bold">AIによる提案</h1>
+          </label>
+          <ReactMarkdown>{article?.content}</ReactMarkdown>
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1"></label>
+          <label className="block text-gray-700 mb-1">
+            <h1 className="text-2xl font-bold">実践してみての効果</h1>
+          </label>
           {article?.aftercare}
-        </div>
-
-        <div className="flex items-center justify-between mt-4">
-          <div className="flex items-center space-x-2">
-            <span className="text-gray-700">{article?.like_count}</span>
-          </div>
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 mb-1">{article?.age_tag}</label>
+        </div>
+        <div className="card mb-4">
+          <div className="card-body">
+            <button className="btn btn-light">
+              <FontAwesomeIcon icon={faThumbsUp} /> {article?.like_count}
+            </button>
+            <p className="card-text">
+              <small className="text-muted"></small>
+            </p>
+          </div>
         </div>
       </div>
     </div>
