@@ -2,6 +2,10 @@
 
 import { redirect } from "next/navigation";
 
-export async function navigate(url: string, where: string) {
-  redirect(`./articles/${url}/${where}`);
+export async function navigate(
+  url: string,
+  where: string,
+  content: string | undefined
+) {
+  redirect(`/AI/articles/${url}/${where}?${content}`);
 }

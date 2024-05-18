@@ -1,5 +1,6 @@
 "use server";
 import prisma from "@/lib/prisma";
+import { error } from "console";
 
 export default async function updateUsernameByEmail(
   email: string,
@@ -13,7 +14,7 @@ export default async function updateUsernameByEmail(
     });
 
     if (!user) {
-      throw new Error(`User with email ${email} not found`);
+      throw error;
     }
 
     const updatedUser = await prisma.user.update({
