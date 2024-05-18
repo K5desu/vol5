@@ -3,12 +3,15 @@ import React from "react";
 import getArticleById from "@/app/api/article/getArticleById";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-
+import updateArticleById from "@/app/api/article/updateArticleById";
 import { useState } from "react";
 
 const MainContent = () => {
   const params = useParams<{ articleid: string; item: string }>();
-
+  const [selectedValue, setSelectedValue] = useState<boolean>(false);
+  const handleChangeradio = (e: any) => {
+    setSelectedValue(e.target.value === "true");
+  };
   type ArticleType1 = {
     id: string;
     user_id: number;
@@ -23,10 +26,10 @@ const MainContent = () => {
     category_tag: string;
     open: boolean;
     created_at: Date;
-    updated_at: Date;
-    // userフィールドを追加
+    updated_at: Date; // userフィールドを追加
   };
   const [article, setArticle] = useState<ArticleType1 | null>(null);
+  const [text, setText] = useState("");
   useEffect(() => {
     const fetchArticle = async () => {
       const articles = await getArticleById(params.articleid);
@@ -43,14 +46,6 @@ const MainContent = () => {
         </h2>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1"></label>
-          <textarea
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#ADC9D6]"
-            placeholder={article?.content}
-          ></textarea>
-        </div>
-
-        <div className="mb-4">
           <label className="block text-gray-700 mb-1">AIによる提案</label>
           <textarea
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#ADC9D6]"
@@ -63,38 +58,46 @@ const MainContent = () => {
           <input
             type="text"
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#ADC9D6]"
-            placeholder="タイトル名"
+            placeholder={article?.title}
+            disabled
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1">
-            実際にしたaa対処法とその後
-          </label>
+          <label className="block text-gray-700 mb-1"></label>
           <textarea
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#ADC9D6]"
-            placeholder="内容"
+            placeholder="実践してみての感想"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           ></textarea>
         </div>
 
         <div className="flex items-center mb-4">
           <label className="mr-4 text-gray-700">公開する</label>
           <div className="flex items-center">
-            <input type="radio" name="public" value="yes" className="mr-2" />
+            <input
+              type="radio"
+              name="public"
+              value="true"
+              className="mr-2"
+              onChange={handleChangeradio}
+            />
             <label className="mr-4">はい</label>
-            <input type="radio" name="public" value="no" className="mr-2" />
+            <input
+              type="radio"
+              name="public"
+              value="false"
+              className="mr-2"
+              onChange={handleChangeradio}
+            />
             <label>いいえ</label>
           </div>
         </div>
 
         <div className="flex items-center justify-between mt-4">
           <div className="flex items-center space-x-2">
-            <img
-              src="https://via.placeholder.com/24"
-              alt="user icon"
-              className="w-6 h-6 rounded-full"
-            />
-            <span className="text-gray-700">@username</span>
+            <span className="text-gray-700">{}</span>
           </div>
           <div className="flex items-center space-x-4 text-gray-500">
             <svg
@@ -125,24 +128,26 @@ const MainContent = () => {
                 d="M20.84 4.61a4.5 4.5 0 00-6.36 0L12 7.09l-2.48-2.48a4.5 4.5 0 00-6.36 6.36l6.36 6.36L12 20.84l8.36-8.36a4.5 4.5 0 000-6.36z"
               ></path>
             </svg>
-            <span>2023年01月28日</span>
+            <span></span>
           </div>
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1">タグ</label>
-          <input
-            type="text"
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#ADC9D6]"
-            placeholder="タグを入力"
-          />
+          <label className="block text-gray-700 mb-1">{article?.age_tag}</label>
         </div>
 
         <button
           type="submit"
           className="bg-[#ADC9D6] text-white px-4 py-2 rounded hover:bg-blue-600 transition mt-4"
+          onClick={async () => {
+            await updateArticleById(
+              params.articleid,
+              text,
+              Boolean(selectedValue)
+            );
+          }}
         >
-          保存
+          更新
         </button>
       </div>
     </div>

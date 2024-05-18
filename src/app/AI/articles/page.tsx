@@ -3,9 +3,6 @@
 import getAllartile from "@/app/api/article/getAllarticle";
 import { useEffect, useState } from "react";
 import { ArticleType } from "@/lib/artiletype";
-import { Button } from "@/components/ui/button";
-import cuid from "cuid";
-import { navigate } from "@/lib/redirect";
 import cardui from "@/components/component/card-ui";
 
 export default function Page() {

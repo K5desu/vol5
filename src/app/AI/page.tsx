@@ -32,7 +32,7 @@ export default function Page() {
       description: "",
     },
   ]);
-  let id = cuid();
+
   const handleClick = async () => {
     const inputValue = inputRef.current?.value;
     if (inputRef.current) {
@@ -156,18 +156,21 @@ export default function Page() {
   return (
     <div>
       {geminiResponse ? (
-        cards.map((card, index) => {
-          return (
-            <Card key={index}>
-              <CardHeader>
-                <CardTitle>{card.title}</CardTitle>
-                <CardDescription>
-                  <Reactmarkdown>{card.description}</Reactmarkdown>
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          );
-        })
+        <div>
+          aaa
+          {cards.map((card, index) => {
+            return (
+              <Card key={index}>
+                <CardHeader>
+                  <CardTitle>{card.title}</CardTitle>
+                  <CardDescription>
+                    <Reactmarkdown>{card.description}</Reactmarkdown>
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            );
+          })}
+        </div>
       ) : (
         <div className="flex justify-center items-center  bg-gray-200">
           <main className="w-full  p-8 bg-white shadow-lg rounded-xl">

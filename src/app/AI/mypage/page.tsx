@@ -1,17 +1,14 @@
 "use client";
-import Logout from "@/components/Oauth/Logout";
 import getArticleByEmail from "@/app/api/article/getArticlesByEmail";
 import { useSession } from "next-auth/react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, use } from "react";
 import Image from "next/image";
 import ButtonLoading from "@/components/buttonLoding";
 import createUser from "@/app/api/user/createUser";
-import { Button } from "@/components/ui/button";
-import deleteArticleById from "@/app/api/article/deleteArticleById";
-import { navigate } from "@/lib/redirect";
-import updateUsernameByEmail from "@/app/api/user/changeUsernameByEmail";
+
 import getUserByEmail from "@/app/api/user/getUserByEmail";
 import CardUi from "@/components/component/card-ui";
+import { ProfilePage } from "@/components/component/profile";
 export default function Page() {
   type ArticleType1 = {
     id: string;
@@ -33,8 +30,7 @@ export default function Page() {
   const [articles, setArticles] = useState<ArticleType1[] | null>(null);
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
-  const [update, setUpdate] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+
   const userRef = useRef<{
     id: number;
     username: string;
@@ -64,45 +60,16 @@ export default function Page() {
 
   return (
     <div className="block">
-      <Logout></Logout>
-      {update ? (
-        <div>
-          <input type="text" ref={inputRef} />
-          <Button
-            onClick={() => {
-              if (inputRef.current && userRef.current)
-                userRef.current.username = inputRef.current.value;
-              if (inputRef.current && session?.user?.email) {
-                updateUsernameByEmail(
-                  session?.user?.email,
-                  inputRef.current.value
-                );
-                setUpdate(false);
-              }
-            }}
-          >
-            更新
-          </Button>
-        </div>
-      ) : (
-        <div>
-          <h2>ユーザー名は{userRef.current?.username}</h2>
-          <Button onClick={() => setUpdate(true)}>編集する</Button>
-        </div>
-      )}
-      <h2>
-        Userの画像は
-        {session?.user?.image ? (
-          <Image
-            src={session?.user?.image}
-            alt="user`s image"
-            width={100}
-            height={100}
-          ></Image>
-        ) : (
-          "ありません"
+      {session?.user &&
+        session.user.image &&
+        userRef.current &&
+        userRef.current.username && (
+          <ProfilePage
+            img={session.user.image}
+            username={userRef.current.username}
+          />
         )}
-      </h2>
+
       <h2>
         {articles ? (
           <ul>
@@ -124,7 +91,9 @@ export default function Page() {
         ) : loading ? (
           <div>記事はありません</div>
         ) : (
-          <ButtonLoading />
+          <div className="flex items-center justify-center h-screen">
+            <ButtonLoading />
+          </div>
         )}
       </h2>
     </div>
