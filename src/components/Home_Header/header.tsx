@@ -1,5 +1,6 @@
 import React from 'react';
 import { Nunito } from 'next/font/google';
+import Link from 'next/link';
 
 const nunito = Nunito({ subsets: ['latin'], weight: ['400', '700'] });
 
@@ -10,9 +11,9 @@ const Header = ({ title = 'Default Title' }) => {
         <img src="placeholder-icon.png" alt="App Icon" className="w-10 h-10 rounded-full border-2 border-white" />
       </div>
       <h1 className="flex-grow text-center text-2xl font-bold text-white tracking-wide">{title}</h1>
-      <button className="px-4 py-2 bg-white text-gray-900 rounded-lg shadow hover:bg-gray-100 transition duration-300">
-        ログイン
-      </button>
+      <Link href="/AI" className="px-4 py-2 bg-white text-gray-900 rounded-lg shadow hover:bg-gray-100 transition duration-300">
+        使ってみる
+      </Link>
     </header>
   );
 };
