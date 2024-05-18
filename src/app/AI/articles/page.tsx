@@ -16,21 +16,25 @@ export default function Page() {
   }, []);
   return (
     <>
-      {articles.map((item, index) => (
-        <div key={index}>
-          {item.aftercare &&
-            cardui(
-              item.id,
-              item.title,
-              item.age_tag,
-              item.gender_tag,
-              item.user.username,
-              item.like_count,
-              item.user.blob_id,
-              false
-            )}
-        </div>
-      ))}
+
+      <div className="block m-3 justify-between w-[100vw] ">
+        {articles.map((item, index) => (
+          <div key={index} className="mx-auto my-3">
+            {item.aftercare &&
+              cardui(
+                item.id,
+                item.title,
+                item.age_tag,
+                item.gender_tag,
+                item.user.username,
+                item.like_count,
+                item.user.blob_id,
+                false
+              )}
+          </div>
+        ))}
+      </div>
+
     </>
   );
 }

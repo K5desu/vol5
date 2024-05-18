@@ -76,7 +76,7 @@ const Introduction = () => {
     <div className="bg-gray-200 min-h-screen">
       <Header title="AI Love Stress" />
       <Navbar onScrollToPersonalityCards={handleScrollToPersonalityCards} />
-      <div className="p-4 flex flex-col items-center justify-center">
+      {/* <div className="p-4 flex flex-col items-center justify-center">
         <div className="w-2/3 text-center">
           <h1 className="text-2xl font-bold mb-4">StressNavigaterが取り組む課題</h1>
           <p className="mt-2 text-lg">
@@ -115,7 +115,7 @@ const Introduction = () => {
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
-      </div>
+      </div> */}
 
       <div className="flex justify-center items-center mt-8">
         <div className="w-3/5">

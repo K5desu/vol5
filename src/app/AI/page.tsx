@@ -37,6 +37,7 @@ export default function Page() {
   let possibility: string = "";
   let category: string = "";
 
+
   const handleClick = async () => {
     const inputValue = inputRef.current?.value;
     if (inputRef.current) {
@@ -112,6 +113,7 @@ export default function Page() {
             type.combination.category === category
         );
         setPersonalityType(matchedType);
+
       } else {
       }
     }
@@ -176,18 +178,33 @@ export default function Page() {
       )}{" "}
       {geminiResponse ? (
         <div>
-          {cards.map((card, index) => (
-            <div key={index}>
-              <Card>
-                <CardHeader>
-                  <CardTitle>{card.title}</CardTitle>
-                  <CardDescription>
-                    <Reactmarkdown>{card.description}</Reactmarkdown>
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </div>
-          ))}
+
+          {personalityType && (
+              <PersonalityCard
+                title={personalityType.title}
+                description={personalityType.description}
+                color={personalityType.color}
+                tag={`${possibility} ${category}`}
+                animationData={personalityType.animationData}
+              />
+            )}
+          
+          {
+        cards.map((card, index) => (
+
+          <div key={index}>
+            <Card>
+              <CardHeader>
+                <CardTitle>{card.title}</CardTitle>
+                <CardDescription>
+                  <Reactmarkdown>{card.description}</Reactmarkdown>
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            
+          </div>
+        ))}
+
         </div>
       ) : (
         <div className="flex justify-center items-center  ">
@@ -247,24 +264,25 @@ export default function Page() {
             <div className="mb-12">
               <p className="mb-4 font-semibold">詳細</p>
               <textarea
-                className="w-full h-36 p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
-                placeholder="ストレスの詳細を記述"
-                ref={inputRef}
-              ></textarea>
-            </div>
-            <div className="text-center">
-              <button
-                type="submit"
-                className="px-8 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-500 focus:outline-none"
-                onClick={async () => handleClick()}
-              >
-                送信
-              </button>
-            </div>
-          </main>
-        </div>
-      )}
-      {notpossibility}
-    </div>
-  );
-}
+                                className="w-full h-36 p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
+                                placeholder="ストレスの詳細を記述"
+                                ref={inputRef}
+                              ></textarea>
+                            </div>
+                            <div className="text-center">
+                              <button
+                                type="submit"
+                                className="px-8 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-500 focus:outline-none"
+                                onClick={async () => handleClick()}
+                              >
+                                送信
+                              </button>
+                            </div>
+                          </main>
+                        </div>
+                      )}
+                      {notpossibility}
+                    </div>
+                  );
+                }
+                

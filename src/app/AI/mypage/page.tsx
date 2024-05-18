@@ -74,7 +74,7 @@ export default function Page() {
         {articles ? (
           <ul>
             {articles.map((article, index) => (
-              <li key={index}>
+              <li key={index} className="grid grid-cols-3 gap-1 max-w-5xl mx-auto p-4">
                 {CardUi(
                   article.id,
                   article.title,
