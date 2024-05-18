@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 
 export default async function updateArticleById(
   articleId: string,
-  newContent: string
+  aftercare: string
 ) {
   try {
     const updatedArticle = await prisma.article.update({
@@ -11,7 +11,7 @@ export default async function updateArticleById(
         id: articleId,
       },
       data: {
-        content: newContent,
+        aftercare: aftercare,
       },
     });
 

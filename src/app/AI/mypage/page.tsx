@@ -2,7 +2,7 @@
 import Logout from "@/components/Oauth/Logout";
 import getArticleByEmail from "@/app/api/article/getArticlesByEmail";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import ButtonLoading from "@/components/buttonLoding";
 import createUser from "@/app/api/user/createUser";
@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import deleteArticleById from "@/app/api/article/deleteArticleById";
 import { navigate } from "@/lib/redirect";
 import updateUsernameByEmail from "@/app/api/user/changeUsernameByEmail";
-import { useRef } from "react";
 import getUserByEmail from "@/app/api/user/getUserByEmail";
 export default function Page() {
   const [articles, setArticles] = useState<ArticleType[] | null>(null);
@@ -19,17 +18,18 @@ export default function Page() {
   const { data: session, status } = useSession();
   const [update, setUpdate] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  let user = {
-    id: 0,
-    email: "",
-    username: "",
-    blob_id: "",
-  };
+  const userRef = useRef<{
+    id: number;
+    username: string;
+    email: string;
+    blob_id: string | null;
+  } | null>(null);
   const editArticle = (url: string) => {
     console.log("click");
 
     navigate(url, "edit", undefined);
   };
+
   useEffect(() => {
     if (status === "authenticated" && session?.user?.email) {
       (async () => {
@@ -38,7 +38,7 @@ export default function Page() {
         const image = session?.user?.image;
         if (email && name && image) {
           await createUser(email, name, image);
-          user = await getUserByEmail(email);
+          userRef.current = await getUserByEmail(email);
           const articles = await getArticleByEmail(email);
 
           setLoading(true);
@@ -52,12 +52,13 @@ export default function Page() {
 
   return (
     <div className="block">
-      <h1>こんにちは、{session?.user?.name}さん</h1>
       {update ? (
         <div>
           <input type="text" ref={inputRef} />
           <Button
             onClick={() => {
+              if (inputRef.current && userRef.current)
+                userRef.current.username = inputRef.current.value;
               if (inputRef.current && session?.user?.email) {
                 updateUsernameByEmail(
                   session?.user?.email,
@@ -72,15 +73,10 @@ export default function Page() {
         </div>
       ) : (
         <div>
-          <h2>ユーザー名は{session?.user?.name}</h2>
+          <h2>ユーザー名は{userRef.current?.username}</h2>
           <Button onClick={() => setUpdate(true)}>編集する</Button>
         </div>
       )}
-
-      <input type="text" />
-      <Button onClick={() => {}}>更新</Button>
-
-      <h2>メールは{session?.user?.email}</h2>
       <h2>
         Userの画像は
         {session?.user?.image ? (

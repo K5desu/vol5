@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 export default function Home() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const params = useParams<{ articleid: string; item: string }>();
 
   const [content, setContent] = useState("");

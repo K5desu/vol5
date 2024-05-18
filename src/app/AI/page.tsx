@@ -3,7 +3,10 @@ import { useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import Gemini from "@/app/api/gemini";
 import { useState } from "react";
+import createArticleByEmail from "../api/article/createArticleByEmail";
 import geminiapititle from "@/app/api/geminititle";
+import cuid from "cuid";
+import { useSession } from "next-auth/react";
 import {
   Card,
   CardDescription,
@@ -13,11 +16,12 @@ import {
 import Reactmarkdown from "react-markdown";
 import gemininot from "@/app/api/gemininot";
 export default function Page() {
+  const { data: session, status } = useSession();
   const { toast } = useToast();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [notpossibility, setNotpossibility] = useState("");
   const [geminiResponse, setGeminiResponse] = useState("");
-  const [title, setTitle] = useState("");
+  let geminititle: string = "";
   let gender: string = "";
   let age: string = "";
   let duration: string = "";
@@ -29,6 +33,7 @@ export default function Page() {
       description: "",
     },
   ]);
+  let id = cuid();
   const handleClick = async () => {
     const inputValue = inputRef.current?.value;
     if (inputRef.current) {
@@ -45,7 +50,11 @@ export default function Page() {
           category,
           inputValue
         );
-        if (response.candidates && response.candidates[0].content.parts[0]) {
+        if (
+          response &&
+          response.candidates &&
+          response.candidates[0].content.parts[0]
+        ) {
           setGeminiResponse(response.candidates[0].content.parts[0].text || "");
 
           let geminiResponse =
@@ -65,12 +74,29 @@ export default function Page() {
             }))
           );
           if (title.candidates && title?.candidates[0]?.content.parts[0]) {
-            setTitle(title.candidates[0].content.parts[0].text || "");
+            geminititle = title.candidates[0].content.parts[0].text || "";
           }
-          toast({
-            title: "記事作成完了",
-            description: "マイページに記事が保存されました",
-          });
+          if (session?.user?.email) {
+            age = age.replace("代", "");
+            let ageNum = Number(age);
+            // 20
+            const id = cuid();
+            createArticleByEmail(
+              id,
+              session?.user?.email,
+              geminititle,
+              geminiResponse,
+              gender,
+              ageNum,
+              duration,
+              category,
+              possibility
+            );
+            toast({
+              title: "記事作成完了",
+              description: "マイページに記事が保存されました。",
+            });
+          }
         } else {
           console.log("Response is not in the expected format");
         }
@@ -100,13 +126,34 @@ export default function Page() {
               description: descriptions[i].trim(),
             }))
           );
+          const title = await geminiapititle(inputValue);
           setNotpossibility(
             "あなたに最も必要なコーピングは、身近な人々や信頼できる他者への相談、近い状況にある人の経験談などを取り入れる情動焦点型コーピングです。以下の記事に近いカテゴリの方々の記事を載せていますのでぜひご覧ください。"
           );
-          toast({
-            title: "記事作成完了",
-            description: "マイページに記事が保存されました。",
-          });
+          if (title.candidates && title?.candidates[0]?.content.parts[0]) {
+            geminititle = title.candidates[0].content.parts[0].text || "";
+          }
+          if (session?.user?.email) {
+            age = age.replace("代", "");
+            let ageNum = Number(age);
+            // 20
+            const id = cuid();
+            createArticleByEmail(
+              id,
+              session?.user?.email,
+              geminititle,
+              geminiResponse,
+              gender,
+              ageNum,
+              duration,
+              category,
+              possibility
+            );
+            toast({
+              title: "記事作成完了",
+              description: "マイページに記事が保存されました。",
+            });
+          }
         } else {
           console.log("Response is not in the expected format");
         }
@@ -162,7 +209,6 @@ export default function Page() {
 
   return (
     <div>
-      {title}
       {geminiResponse ? (
         cards.map((card, index) => {
           return (
