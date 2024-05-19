@@ -179,15 +179,7 @@ export default function Page() {
       {geminiResponse ? (
         <div>
 
-          {personalityType && (
-              <PersonalityCard
-                title={personalityType.title}
-                description={personalityType.description}
-                color={personalityType.color}
-                tag={`${possibility} ${category}`}
-                animationData={personalityType.animationData}
-              />
-            )}
+          
           
           {
         cards.map((card, index) => (
