@@ -1,12 +1,14 @@
-import React from 'react';
-import PersonalityCard from '@/components/component/TypeCard';
-import { types } from '@/data/types';
+import React from "react";
+import PersonalityCard from "@/components/component/TypeCard";
+import { types } from "@/data/types";
 
 interface ShowPersonalityCardProps {
   typeName: string;
 }
 
-const ShowPersonalityCard: React.FC<ShowPersonalityCardProps> = ({ typeName }) => {
+const ShowPersonalityCard: React.FC<ShowPersonalityCardProps> = ({
+  typeName,
+}) => {
   const selectedType = types.find((type) => type.title === typeName);
 
   if (!selectedType) {
@@ -20,6 +22,7 @@ const ShowPersonalityCard: React.FC<ShowPersonalityCardProps> = ({ typeName }) =
       color={selectedType.color}
       tag={selectedType.tag}
       animationData={selectedType.animationData}
+      length={false}
     />
   );
 };

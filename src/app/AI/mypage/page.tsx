@@ -9,6 +9,7 @@ import createUser from "@/app/api/user/createUser";
 import getUserByEmail from "@/app/api/user/getUserByEmail";
 import CardUi from "@/components/component/card-ui";
 import { ProfilePage } from "@/components/component/profile";
+import Logout from "@/components/Oauth/Logout";
 export default function Page() {
   type ArticleType1 = {
     id: string;

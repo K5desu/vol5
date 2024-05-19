@@ -54,10 +54,10 @@ export default function CardUI(
           )}
           {username}
         </span>
-
-        <span className="bg-gray-200 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded w-10 h-10">
-          {matchedType && <ShowPersonalityCard typeName={matchedType?.title} />}
-        </span>
+        <div className="text-center text-shadow text-2xl">
+          {" "}
+          {matchedType && matchedType?.title}
+        </div>
       </div>
 
       {/* User Info and Icons */}

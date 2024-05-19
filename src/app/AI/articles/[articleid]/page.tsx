@@ -76,7 +76,9 @@ const ArticleView = () => {
           </h2>
           <p className="text-lg text-gray-700 leading-relaxed">
             <h2 className="text-xl">
-              {article && formatTitle(article?.content)}
+              <ReactMarkdown>
+                {article && formatTitle(article?.content)}
+              </ReactMarkdown>
             </h2>
           </p>
         </div>
