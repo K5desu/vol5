@@ -18,6 +18,7 @@ import ICard from '@/components/component/intro-card-ui';
 import Navbar from '@/components/component/Navigater';
 import PersonalityCard from '@/components/component/TypeCard';
 import { types } from '@/data/types'; // 正しいパスでインポートする
+import { Player } from '@lottiefiles/react-lottie-player';
 
 
 
@@ -185,18 +186,21 @@ const Introduction = () => {
       <div className="bg-blue-500 text-white text-center py-4 px-6 rounded-lg shadow-md" onClick={handleScrollToTop}>
         ストレスタイプ診断
       </div>
-      <div ref={personalityCardsRef} className="p-8">
-        {types.map((type, index) => (
-          <PersonalityCard
-            key={index}
-            title={type.title}
-            description={type.description}
-            color={type.color}
-            tag={type.tag}
-            animationData={type.animationData}
-          />
-        ))}
-      </div>
+      <div ref={personalityCardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-4 p-8">
+  {types.map((type, index) => (
+    <div key={index} className="bg-white p-6 rounded shadow-md">
+      <Player
+        autoplay
+        loop
+        src={type.animationData}
+        style={{ height: '200px', width: '100%', marginBottom: '20px' }}
+      />
+      <h2 style={{ color: type.color, marginBottom: '10px' }}>{type.title}</h2>
+      <p style={{ fontSize: '16px', marginBottom: '10px', color: '#555' }}>{type.description}</p>
+      <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#777' }}>{type.tag}</p>
+    </div>
+  ))}
+</div>
     </div>
   );
 };
