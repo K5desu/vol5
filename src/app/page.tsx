@@ -193,15 +193,8 @@ const Introduction = () => {
       <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#777' }}>{type.tag}</p>
     </div>
   ))}
+<img src="/ThemeIcon.png" alt="ストレス解消アプリ" className="max-w-md w-full h-auto object-cover transform scale-60 rounded-lg shadow-md" />
 
-<Link
-        className="mb-2 flex h-20 items-end justify-start rounded-md bg-gray-600 p-4 md:h-40"
-        href="/"
-      >
-        
-        <img src="/ThemeIcon.png" alt="ストレス解消アプリ" className=" object-cover transform scale-60" />
-       
-      </Link>
 </div>
 
     </div>
