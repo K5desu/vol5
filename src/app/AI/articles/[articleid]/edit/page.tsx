@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import updateArticleById from "@/app/api/article/updateArticleById";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import ReactMarkdown from "react-markdown";
 const MainContent = () => {
   const params = useParams<{ articleid: string; item: string }>();
   const [selectedValue, setSelectedValue] = useState<boolean>(false);
@@ -55,9 +56,10 @@ const MainContent = () => {
           <label className="block text-gray-700 mb-1">AIによる提案</label>
           <textarea
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#ADC9D6]"
-            placeholder={article?.content}
             disabled
-          ></textarea>
+          >
+            {<ReactMarkdown>{article?.content}</ReactMarkdown>}
+          </textarea>
         </div>
 
         <div className="mb-4">
