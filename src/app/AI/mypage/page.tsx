@@ -2,7 +2,7 @@
 import getArticleByEmail from "@/app/api/article/getArticlesByEmail";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, useRef, use } from "react";
-import Image from "next/image";
+
 import ButtonLoading from "@/components/buttonLoding";
 import createUser from "@/app/api/user/createUser";
 
@@ -74,7 +74,10 @@ export default function Page() {
         {articles ? (
           <ul>
             {articles.map((article, index) => (
-              <li key={index} className="grid grid-cols-3 gap-1 max-w-5xl mx-auto p-4">
+              <li
+                key={index}
+                className="grid grid-cols-3 gap-1 max-w-5xl mx-auto p-4"
+              >
                 {CardUi(
                   article.id,
                   article.title,
