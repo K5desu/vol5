@@ -19,42 +19,43 @@ import Navbar from '@/components/component/Navigater';
 import PersonalityCard from '@/components/component/TypeCard';
 import { types } from '@/data/types'; // 正しいパスでインポートする
 import { Player } from '@lottiefiles/react-lottie-player';
+import Link from 'next/link';
 
 
 
-// カルーセルのアイテムごとの説明
-const carouselItems = [
-  {
-    title: 'Step1',
-    description: '1次評価と2次評価の把握',
-    content: 'あなたが現在抱えているストレッサーについてタグを選択することで把握します。',
-    imageSrc: '/images/step1.jpg', // ここに実際の画像のパスを指定
-  },
-  {
-    title: 'Step2',
-    description: 'AIによるコーピングの提案',
-    content: 'コーピングはストレスを緩和するための対処法',
-    imageSrc: '/images/step2.jpg', // ここに実際の画像のパスを指定
-  },
-  {
-    title: 'Step3',
-    description: '自身と同じストレスタイプの記事が表示されます。',
-    content: '記事はStep1で選んだタグを元に表示されます。',
-    imageSrc: '/images/step3.jpg', // ここに実際の画像のパスを指定
-  },
-  {
-    title: 'Step4',
-    description: 'AIで提案された対処法は記事としてマイページに保存されます。',
-    content: '実際にコーピングを試したのち、それが上手くいったかどうかを記事として残すことで、自分に有効なコーピング法を蓄積できる',
-    imageSrc: '/images/step4.jpg', // ここに実際の画像のパスを指定
-  },
-  {
-    title: 'Step5',
-    description: 'いいね機能',
-    content: '自身の投稿への共感を見ることで情動型アプローチの代替的作用。ストレスタイプも判断できます',
-    imageSrc: '/images/step5.jpg', // ここに実際の画像のパスを指定
-  },
-];
+// // カルーセルのアイテムごとの説明
+// const carouselItems = [
+//   {
+//     title: 'Step1',
+//     description: '1次評価と2次評価の把握',
+//     content: 'あなたが現在抱えているストレッサーについてタグを選択することで把握します。',
+//     imageSrc: '/images/step1.jpg', // ここに実際の画像のパスを指定
+//   },
+//   {
+//     title: 'Step2',
+//     description: 'AIによるコーピングの提案',
+//     content: 'コーピングはストレスを緩和するための対処法',
+//     imageSrc: '/images/step2.jpg', // ここに実際の画像のパスを指定
+//   },
+//   {
+//     title: 'Step3',
+//     description: '自身と同じストレスタイプの記事が表示されます。',
+//     content: '記事はStep1で選んだタグを元に表示されます。',
+//     imageSrc: '/images/step3.jpg', // ここに実際の画像のパスを指定
+//   },
+//   {
+//     title: 'Step4',
+//     description: 'AIで提案された対処法は記事としてマイページに保存されます。',
+//     content: '実際にコーピングを試したのち、それが上手くいったかどうかを記事として残すことで、自分に有効なコーピング法を蓄積できる',
+//     imageSrc: '/images/step4.jpg', // ここに実際の画像のパスを指定
+//   },
+//   {
+//     title: 'Step5',
+//     description: 'いいね機能',
+//     content: '自身の投稿への共感を見ることで情動型アプローチの代替的作用。ストレスタイプも判断できます',
+//     imageSrc: '/images/step5.jpg', // ここに実際の画像のパスを指定
+//   },
+// ];
 
 const Introduction = () => {
   const personalityCardsRef = useRef<HTMLDivElement | null>(null);
@@ -130,33 +131,18 @@ const Introduction = () => {
           ></lottie-player>
         </div>
         <div className="w-2/5 flex flex-col ml-8">
-          <h1 className="text-4xl font-bold mb-4">ストレスそのものでなく、</h1>
-          <h1 className="text-4xl font-bold mb-4">ストレス対処ができていないことが問題</h1>
-          <p className="mb-2">
-            厚生労働省が5年に1回行っている「労働者健康状況調査」によれば、
-          </p>
-          <p className="mb-2">
-            「仕事や職業生活でストレスを感じている」労働者の割合は、
-          </p>
-          <p className="mb-2">
-            50.6％（1982年）、55.0％（1987年）、57.3％（1992年）、62.8％（1997年）、61.5％（2002年）、58.0％（2007年）、60.9％（2012年）と推移しており、
-          </p>
-          <p className="mb-2">
-            今や働く人の約6割はストレスを感じながら仕事をしていると言えます。
-          </p>
-          <p className="mb-2">
-            ですが、ストレスは単にネガティブなものというわけではありません。
-          </p>
-          <p className="mb-2">
-            必要なのは、ストレスをなくすばかりでなくストレスを正しく把握し、うまく付き合うことです。
-          </p>
-          <p className="mb-2">
-            Stress NavはGeminiAPIを利用し、皆さんのストレス理解と適切な対処法の理解を手助けします。
-          </p>
+          <h1 className="text-4xl font-bold mb-4">ストレスタイプ診断アプリ</h1>
+          <div className="mt-6 space-y-4 text-lg text-gray-700">
+    <p className="font-semibold">AI Love Stress はストレス需要の仕組みを反映したGeminiAPIを用いて</p>
+    <p className="font-semibold">皆さんのストレスタイプを診断します。</p>
+    <p className="font-semibold">自身のストレスタイプを正しく理解して</p>
+    <p className="font-semibold">上手にストレスと付き合っていきましょう！</p>
+  </div>
+          
         </div>
       </div>
 
-      <div className="flex justify-center items-center mt-8">
+      {/* <div className="flex justify-center items-center mt-8">
         <h1 className="text-4xl font-bold">アプリの流れとストレス適応のメカニズム</h1>
       </div>
 
@@ -182,10 +168,17 @@ const Introduction = () => {
           <div>・</div>
           <ICard title="詳細" description="アプリでの導入：GeminiAIによる。解決策の提案、自信とストレスタイプが同じ人の記事を参照" content="ストレスに対する対処法　大きく5パターンある。" footer="" />
         </div>
-      </div>
-      <div className="bg-blue-500 text-white text-center py-4 px-6 rounded-lg shadow-md" onClick={handleScrollToTop}>
-        ストレスタイプ診断
-      </div>
+      </div> */}
+      <div className="container mx-auto px-4 py-8">
+  <div 
+    className="bg-blue-500 text-white text-center py-4 px-6 rounded-lg shadow-md cursor-pointer hover:bg-blue-600 transition duration-300" 
+    onClick={handleScrollToTop}
+  >
+    ストレスタイプ診断
+  </div>
+  
+</div>
+
       <div ref={personalityCardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-4 p-8">
   {types.map((type, index) => (
     <div key={index} className="bg-white p-6 rounded shadow-md">
@@ -200,7 +193,10 @@ const Introduction = () => {
       <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#777' }}>{type.tag}</p>
     </div>
   ))}
+<img src="/ThemeIcon.png" alt="ストレス解消アプリ" className="max-w-md w-full h-auto object-cover transform scale-60 rounded-lg shadow-md" />
+
 </div>
+
     </div>
   );
 };
