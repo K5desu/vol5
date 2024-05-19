@@ -186,6 +186,7 @@ export default function Page() {
                 />
               )}
 
+
               {cards.map((card, index) => (
                 <div key={index}>
                   <Card>
@@ -200,6 +201,7 @@ export default function Page() {
               ))}
             </div>
           )}
+
         </div>
       ) : (
         <div className="flex justify-center items-center">
