@@ -14,7 +14,7 @@ export default function Page() {
       const articles = await getAllartile();
       setArticles(articles);
     })();
-  }, []);
+  }, [articles]);
   return (
     <>
       {articles ? (

@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import createArticleByEmail from "../api/article/createArticleByEmail";
 import geminiapititle from "@/app/api/geminititle";
 import cuid from "cuid";
+import { typesnumber } from "@/data/typenuber";
 import {
   Card,
   CardDescription,
@@ -16,6 +17,7 @@ import gemininot from "@/app/api/gemininot";
 import { Testtypes } from "@/data/TestTypes";
 import PersonalityCard from "@/components/component/TypeCard";
 import ButtonLoading from "@/components/buttonLoding";
+import { match } from "assert";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -87,20 +89,24 @@ export default function Page() {
           geminititle = title.candidates[0].content.parts[0].text || "";
         }
         if (session?.user?.email) {
-          age = age.replace("代", "");
-          let ageNum = Number(age);
           const id = cuid();
-          await createArticleByEmail(
-            id,
-            session?.user?.email,
-            geminititle,
-            geminiResponse,
-            gender,
-            ageNum,
-            duration,
-            category,
-            possibility
+          const matchedType = typesnumber.find(
+            (type) =>
+              type.combination.possibility === possibility &&
+              type.combination.category === category
           );
+          if (matchedType)
+            await createArticleByEmail(
+              id,
+              session?.user?.email,
+              geminititle,
+              geminiResponse,
+              gender,
+              matchedType?.number,
+              duration,
+              category,
+              possibility
+            );
           toast({
             title: "記事作成完了",
             description: "マイページに記事が保存されました。",
@@ -142,9 +148,7 @@ export default function Page() {
                   if (name == "gender") {
                     gender = e.target.value;
                   }
-                  if (name == "age") {
-                    age = e.target.value;
-                  }
+
                   if (name == "duration") {
                     duration = e.target.value;
                   }
@@ -183,9 +187,9 @@ export default function Page() {
                   color={personalityType.color}
                   tag={`${possibility} ${category}`}
                   animationData={personalityType.animationData}
+                  length={true}
                 />
               )}
-
 
               {cards.map((card, index) => (
                 <div key={index}>
@@ -201,7 +205,6 @@ export default function Page() {
               ))}
             </div>
           )}
-
         </div>
       ) : (
         <div className="flex justify-center items-center">
@@ -218,17 +221,7 @@ export default function Page() {
               ]}
               name="gender"
             />
-            <QuestionBlock
-              question="質問2：年齢"
-              options={[
-                { label: "10代", value: "10代" },
-                { label: "20代", value: "20代" },
-                { label: "30代", value: "30代" },
-                { label: "40代", value: "40代" },
-                { label: "50代", value: "50代" },
-              ]}
-              name="age"
-            />
+
             <QuestionBlock
               question="質問3：ストレスにさらされる期間"
               options={[

@@ -7,6 +7,8 @@ import updateArticleById from "@/app/api/article/updateArticleById";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import ReactMarkdown from "react-markdown";
+import { typesnumber } from "@/data/typenuber";
+import ShowPersonalityCard from "@/components/component/showPersonalityCard";
 const MainContent = () => {
   const params = useParams<{ articleid: string; item: string }>();
   const [selectedValue, setSelectedValue] = useState<boolean>(false);
@@ -32,6 +34,9 @@ const MainContent = () => {
   };
   const [article, setArticle] = useState<ArticleType1 | null>(null);
   const [text, setText] = useState("");
+  const matchedType = typesnumber.find(
+    (type) => type.number === article?.age_tag
+  );
   useEffect(() => {
     const fetchArticle = async () => {
       const articles = await getArticleById(params.articleid);
@@ -40,8 +45,10 @@ const MainContent = () => {
 
     fetchArticle();
   }, [params.articleid]);
+
   return (
     <div className="flex-1 p-6 ">
+      {matchedType && <ShowPersonalityCard typeName={matchedType?.title} />}
       <div className="bg-white p-6 rounded shadow-md w-[1000px] mx-auto">
         <div className="mb-4">
           <label className="block text-gray-700 mb-1">ストレスの原因</label>
@@ -54,11 +61,8 @@ const MainContent = () => {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 mb-1">AIによる提案</label>
-          <textarea
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#ADC9D6]"
-            disabled
-          >
-            {<ReactMarkdown>{article?.content}</ReactMarkdown>}
+          <textarea className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#ADC9D6]">
+            {article?.content}
           </textarea>
         </div>
 
@@ -71,9 +75,7 @@ const MainContent = () => {
             onChange={(e) => setText(e.target.value)}
           ></textarea>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-1">{article?.age_tag}</label>
-        </div>
+        <div className="mb-4"></div>
 
         <div className="flex items-center mb-4">
           <label className="mr-4 text-gray-700">公開する</label>

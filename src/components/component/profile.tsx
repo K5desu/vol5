@@ -16,30 +16,42 @@ export const ProfilePage = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <>
+    <div>
       {update ? (
         <div>
-          <input
-            type="text"
-            ref={inputRef}
-            className="border border-black border-2"
-          />
-          <button
-            onClick={() => {
-              if (inputRef.current && session?.user?.email) {
-                updateUsernameByEmail(
-                  session?.user?.email,
-                  inputRef.current.value
+          <div className="flex items-center border border-gray-300 p-4 rounded-lg w-50">
+            {img ? (
+              <img
+                src={img}
+                alt="Profile Picture"
+                className="rounded-full w-12 h-12 mr-4"
+              />
+            ) : (
+              "なし"
+            )}
 
-                  // 以下のコードは省略...
-                );
-                setUsernames(inputRef.current.value);
-                setUpdate(false);
-              }
-            }}
-          >
-            Update
-          </button>
+            <input
+              type="text"
+              ref={inputRef}
+              className="border border-black border-2"
+            />
+            <button
+              onClick={() => {
+                if (inputRef.current && session?.user?.email) {
+                  updateUsernameByEmail(
+                    session?.user?.email,
+                    inputRef.current.value
+
+                    // 以下のコードは省略...
+                  );
+                  setUsernames(inputRef.current.value);
+                  setUpdate(false);
+                }
+              }}
+            >
+              Update
+            </button>
+          </div>
         </div>
       ) : (
         <div>
@@ -72,7 +84,7 @@ export const ProfilePage = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

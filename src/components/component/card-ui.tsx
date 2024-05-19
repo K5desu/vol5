@@ -4,7 +4,10 @@
 import Link from "next/link";
 import { navigate } from "@/lib/redirect";
 import deleteArticleById from "@/app/api/article/deleteArticleById";
-
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { typesnumber } from "@/data/typenuber";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ShowPersonalityCard from "@/components/component/showPersonalityCard";
 export default function CardUI(
   id: string,
   title: string,
@@ -15,6 +18,7 @@ export default function CardUI(
   blob_id: string | null,
   session: boolean
 ) {
+  const matchedType = typesnumber.find((type) => type.number === age_tag);
   return (
     <div className="bg-white shadow-md rounded-lg p-4 w-[1000px]">
       <div className="text-gray-900 font-bold mb-2">{title}</div>
@@ -51,8 +55,8 @@ export default function CardUI(
           {username}
         </span>
 
-        <span className="bg-gray-200 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-          {age_tag}
+        <span className="bg-gray-200 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded w-10 h-10">
+          {matchedType && <ShowPersonalityCard typeName={matchedType?.title} />}
         </span>
       </div>
 
@@ -107,7 +111,7 @@ export default function CardUI(
               </svg>
             </button>
           )}
-
+          <FontAwesomeIcon icon={faHeart} />
           <span className="text-gray-500 text-sm">{like_count}</span>
         </div>
       </div>
