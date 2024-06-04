@@ -25,12 +25,14 @@ export default function Page() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [notpossibility, setNotpossibility] = useState("");
   const [geminiResponse, setGeminiResponse] = useState("");
-  const [cards, setCards] = useState<{ title: string; description: string }[]>([
-    {
-      title: "",
-      description: "",
-    },
-  ]);
+  const [cards, setCards] = useState<{ title: string; description: string }[]>(
+    () => [
+      {
+        title: "",
+        description: "",
+      },
+    ]
+  );
   const [personalityType, setPersonalityType] = useState<any>(null);
 
   let geminititle: string = "";
